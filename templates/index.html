@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+    <meta charset="UTF-8">
+    <title>ML API</title>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+
+<body>
+<div class="container" style="margin-bottom: 40px">
+    <div class="row">
+        <h1>Bankruptcy Prediction</h1>
+        <div class="col-md-12">
+            <div class="alert alert-{{prediction_class}}">
+                {{ prediction_text }}
+            </div>
+        </div>
+        <div class="col-md-12">
+            <!-- Main Input For Receiving Query to our ML -->
+            <form action="{{ url_for('predict')}}" method="post" class="form-horizontal">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Net Profit / Total Assets</label>
+                        <input class="form-control" type="text" name="Attr12"
+                               placeholder="Gross Profit / Short-Term Liabilities"
+                               /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Equity / Total Assets</label>
+                        <input class="form-control" type="text" name="Attr13"
+                               placeholder="(Gross Profit + Depreciation) / Sales"
+                               /><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Gross Profit / Short-Term Liabilities</label>
+                        <input class="form-control" type="text" name="Attr15"
+                               placeholder="(Total Liabilities * 365) / (Gross Profit + Depreciation)"
+                               /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>(Gross Profit + Depreciation) / Sales</label>
+                        <input class="form-control" type="text" name="Attr21"
+                               placeholder="Sales(n) / Sales(n-1)" /><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>(Total Liabilities * 365) / (Gross Profit + Depreciation)</label>
+                        <input class="form-control" type="text" name="Attr24"
+                               placeholder="Gross Profit (In 3 years) / Total Assets"
+                               /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>(Gross Profit + Depreciation) / Total Liabilities</label>
+                        <input class="form-control" type="text" name="Attr25"
+                               placeholder="(Equity - Share Capital) / Total Assets" /><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Gross Profit / Sales</label>
+                        <input class="form-control" type="text" name="Attr27"
+                               placeholder="Profit On Operating Activities / Financial Expenses"
+                               /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>(Inventory * 365 ) / Sales</label>
+                        <input class="form-control" type="text" name="Attr29" placeholder="Logarithm Of Total Assets"
+                               /><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Sales(n) / Sales(n-1)</label>
+                        <input class="form-control" type="text" name="Attr30"
+                               placeholder="(Current Liabilities * 365) / Cost Of Products Sold"
+                               /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Profit On Operating Activities / Total Assets</label>
+                        <input class="form-control" type="text" name="Attr34"
+                               placeholder="Operating Expenses / Total Liabilities" /><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Gross Profit (In 3 years) / Total Assets</label>
+                        <input class="form-control" type="text" name="Attr36"
+                               placeholder="Total Sales / Total Assets" /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>(Equity - Share Capital) / Total Assets</label>
+                        <input class="form-control" type="text" name="Attr37"
+                               placeholder="(Current Assets - Inventories) / Long-Term Liabilities"
+                               /><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Profit On Operating Activities / Financial Expenses</label>
+                        <input class="form-control" type="text" name="Attr4"
+                               placeholder="Current Assets / Short-Term Liabilities" /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Working Capital / Fixed Assets</label>
+                        <input class="form-control" type="text" name="Attr40"
+                               placeholder="(Current Assets - Inventory - Receivables) / Short-Term Liabilities"
+                               /><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Logarithm Of Total Assets</label>
+                        <input class="form-control" type="text" name="Attr41"
+                               placeholder="Total Liabilities / ((Profit On Operating Activities + Depreciation) * (12 / 365))"
+                               /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>(Current Liabilities * 365) / Cost Of Products Sold</label>
+                        <input class="form-control" type="text" name="Attr43"
+                               placeholder="Rotation Receivables + Inventory Turnover In Days" /><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>(Current Liabilities * 365) / Cost Of Products Sold</label>
+                        <input class="form-control" type="text" name="Attr45"
+                               placeholder="(Current Liabilities * 365) / Cost Of Products Sold"
+                               /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Rotation Receivables + Inventory Turnover In Days</label>
+                        <input class="form-control" type="text" name="Attr46"
+                               placeholder="(Current Assets - Inventory) / Short-Term Liabilities" /><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>[(Cash + Short-Term Securities + Receivables - Short-Term Liabilities) / (Operating
+                            Expenses
+                            - Depreciation)] * 365</label>
+                        <input class="form-control" type="text" name="Attr5"
+                               placeholder="[(Cash + Short-Term Securities + Receivables - Short-Term Liabilities) / (Operating Expenses - Depreciation)] * 365"
+                               /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Current Assets / Total Liabilities</label>
+                        <input class="form-control" type="text" name="Attr50"
+                               placeholder="Current Assets / Total Liabilities" /><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Working Capital</label>
+                        <input class="form-control" type="text" name="Attr55" placeholder="Working Capital"
+                               /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>(Current Assets - Inventory - Short-Term Liabilities) / (Sales - Gross Profit -
+                            Depreciation)</label>
+                        <input class="form-control" type="text" name="Attr57"
+                               placeholder="(Current Assets - Inventory - Short-Term Liabilities) / (Sales - Gross Profit - Depreciation)"
+                               /><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Long-Term Liabilities / Equity</label>
+                        <input class="form-control" type="text" name="Attr59"
+                               placeholder="Long-Term Liabilities / Equity"
+                               /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Retained Earnings / Total Assets</label>
+                        <input class="form-control" type="text" name="Attr6"
+                               placeholder="Retained Earnings / Total Assets"
+                               /><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Sales / Fixed Assets</label>
+                        <input class="form-control" type="text" name="Attr64" placeholder="Sales / Fixed Assets"
+                               /><br>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Sales / Total Assets</label>
+                        <input class="form-control" type="text" name="Attr9" placeholder="Sales / Total Assets"
+                               /><br>
+                    </div>
+                </div>
+                <!--              <div style="position: fixed; bottom: 50px; right: 30px; width: 50px; height:50px">-->
+                <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+                <!--              </div>-->
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
