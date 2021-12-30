@@ -20,7 +20,7 @@ This project had for goal to analyse the assigned dataset.
 My dataset was about bankruptcy prediction of Polish companies.
 The bankrupt companies were analysed in the period 2000-2012, while the still operating companies were evaluated from 2007 to 2013.
 
-## How to run the project
+## Getting started
 
 ### Install the necessary libraries
 
@@ -36,6 +36,19 @@ To start the API, run the following command in the terminal:
 `python3 main.py`
 
 
-### Use the API
+## How to use the API
 
 Go to [http://127.0.0.1:5000/](http://127.0.0.1:5000/) to use the API.
+
+
+API when fields are not all filled, button is "Fill all fields"
+![](https://github.com/YoanGab/Polish_Companies_Bankruptcy/blob/master/images/API_fields_empty.png)
+<br>
+API when all fields are filled, button becomes "Predict"
+![](https://github.com/YoanGab/Polish_Companies_Bankruptcy/blob/master/images/API_fields_filled.png)
+<br>
+API predicts No Bankrupt for this company
+![](https://github.com/YoanGab/Polish_Companies_Bankruptcy/blob/master/images/Success.png)
+<br>
+API predicts Bankrupt for this company
+![](https://github.com/YoanGab/Polish_Companies_Bankruptcy/blob/master/images/Bankrupt.png)
