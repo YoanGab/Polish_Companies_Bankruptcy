@@ -8,6 +8,7 @@ import pandas as pd
 flask_app = Flask(__name__)
 model = pickle.load(open("models/random_forest2_SMOTE.pkl", "rb"))
 
+# Data retrieved from the notebook thanks to describe function
 features_range = {
     'Attr12': {'min': -6331.8, 'max': 8259.4},
     'Attr13': {'min': -1460.6, 'max': 13315.0},
@@ -40,30 +41,49 @@ features_range = {
 
 @flask_app.route("/")
 def Home():
-    return render_template("index.html")
+    return render_template("index.html", predict_button="Fill all fields")
 
 
 @flask_app.route("/predict", methods=["POST"])
 def predict():
     features = pd.DataFrame(data=request.form, index=[0])
     features_dict = {}
+    action = "predict"
 
     for feature, value in features.to_dict().items():
         if not value[0]:
-            features_dict[feature] = float(random.uniform(features_range[feature]['min'], features_range[feature]['max']))
+            action = "fill"
+            features_dict[feature] = round(
+                random.uniform(features_range[feature]['min'], features_range[feature]['max']), 2)
         else:
             features_dict[feature] = float(value[0])
 
-    prediction = model.predict(pd.DataFrame(data=features_dict, index=[0]))
-    if prediction == 0:
+    if action == "predict":
+        prediction = model.predict(pd.DataFrame(data=features_dict, index=[0]))
+    else:
+        prediction = False
+
+    if isinstance(prediction, bool) and not prediction:
         return render_template("index.html",
-                               prediction_text="The Company will not bankrupt  it's class is {}".format(prediction),
-                               prediction_class="success")
+                               prediction_text="Some values were empty, they have been filled randomly (between the "
+                                               "minimum and maximum value of the feature in the dataset), check them "
+                                               "and click again on predict to see the result.",
+                               prediction_class="warning",
+                               features_dict=features_dict,
+                               predict_button="Predict")
+    elif prediction == 0:
+        return render_template("index.html",
+                               prediction_text="The Company will not bankrupt",
+                               prediction_class="success",
+                               features_dict=features_dict,
+                               predict_button="Predict")
     else:
         return render_template("index.html",
-                               prediction_text=f"The Company will bankrupt it's class is {prediction}",
-                               prediction_class="danger")
+                               prediction_text=f"The Company will bankrupt",
+                               prediction_class="danger",
+                               features_dict=features_dict,
+                               predict_button="Predict")
 
 
 if __name__ == "__main__":
-    flask_app.run(debug=True)
+    flask_app.run()

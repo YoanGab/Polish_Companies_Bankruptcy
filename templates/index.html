@@ -9,6 +9,7 @@
     <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 
@@ -17,129 +18,148 @@
     <div class="row">
         <h1>Bankruptcy Prediction</h1>
         <div class="col-md-12">
-            <div class="alert alert-{{prediction_class}}">
+            <div class="alert alert-{{ prediction_class }}">
                 {{ prediction_text }}
             </div>
         </div>
         <div class="col-md-12">
             <!-- Main Input For Receiving Query to our ML -->
-            <form action="{{ url_for('predict')}}" method="post" class="form-horizontal">
+            <form action="{{ url_for('predict') }}" method="post" class="form-horizontal">
                 <div class="row">
                     <div class="col-md-6">
                         <label>Net Profit / Total Assets</label>
                         <input class="form-control" type="text" name="Attr12"
+                               value="{{ features_dict.Attr12 if features_dict else '' }}"
                                placeholder="Gross Profit / Short-Term Liabilities"
-                               /><br>
+                        /><br>
                     </div>
                     <div class="col-md-6">
                         <label>Equity / Total Assets</label>
                         <input class="form-control" type="text" name="Attr13"
+                               value="{{ features_dict.Attr13 if features_dict else '' }}"
                                placeholder="(Gross Profit + Depreciation) / Sales"
-                               /><br>
+                        /><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>Gross Profit / Short-Term Liabilities</label>
                         <input class="form-control" type="text" name="Attr15"
+                               value="{{ features_dict.Attr15 if features_dict else '' }}"
                                placeholder="(Total Liabilities * 365) / (Gross Profit + Depreciation)"
-                               /><br>
+                        /><br>
                     </div>
                     <div class="col-md-6">
                         <label>(Gross Profit + Depreciation) / Sales</label>
                         <input class="form-control" type="text" name="Attr21"
-                               placeholder="Sales(n) / Sales(n-1)" /><br>
+                               value="{{ features_dict.Attr21 if features_dict else '' }}"
+                               placeholder="Sales(n) / Sales(n-1)"/><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>(Total Liabilities * 365) / (Gross Profit + Depreciation)</label>
                         <input class="form-control" type="text" name="Attr24"
+                               value="{{ features_dict.Attr24 if features_dict else '' }}"
                                placeholder="Gross Profit (In 3 years) / Total Assets"
-                               /><br>
+                        /><br>
                     </div>
                     <div class="col-md-6">
                         <label>(Gross Profit + Depreciation) / Total Liabilities</label>
                         <input class="form-control" type="text" name="Attr25"
-                               placeholder="(Equity - Share Capital) / Total Assets" /><br>
+                               value="{{ features_dict.Attr25 if features_dict else '' }}"
+                               placeholder="(Equity - Share Capital) / Total Assets"/><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>Gross Profit / Sales</label>
                         <input class="form-control" type="text" name="Attr27"
+                               value="{{ features_dict.Attr27 if features_dict else '' }}"
                                placeholder="Profit On Operating Activities / Financial Expenses"
-                               /><br>
+                        /><br>
                     </div>
                     <div class="col-md-6">
                         <label>(Inventory * 365 ) / Sales</label>
-                        <input class="form-control" type="text" name="Attr29" placeholder="Logarithm Of Total Assets"
-                               /><br>
+                        <input class="form-control" type="text" name="Attr29"
+                               value="{{ features_dict.Attr29 if features_dict else '' }}"
+                               placeholder="Logarithm Of Total Assets"
+                        /><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>Sales(n) / Sales(n-1)</label>
                         <input class="form-control" type="text" name="Attr30"
+                               value="{{ features_dict.Attr30 if features_dict else '' }}"
                                placeholder="(Current Liabilities * 365) / Cost Of Products Sold"
-                               /><br>
+                        /><br>
                     </div>
                     <div class="col-md-6">
                         <label>Profit On Operating Activities / Total Assets</label>
                         <input class="form-control" type="text" name="Attr34"
-                               placeholder="Operating Expenses / Total Liabilities" /><br>
+                               value="{{ features_dict.Attr34 if features_dict else '' }}"
+                               placeholder="Operating Expenses / Total Liabilities"/><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>Gross Profit (In 3 years) / Total Assets</label>
                         <input class="form-control" type="text" name="Attr36"
-                               placeholder="Total Sales / Total Assets" /><br>
+                               value="{{ features_dict.Attr36 if features_dict else '' }}"
+                               placeholder="Total Sales / Total Assets"/><br>
                     </div>
                     <div class="col-md-6">
                         <label>(Equity - Share Capital) / Total Assets</label>
                         <input class="form-control" type="text" name="Attr37"
+                               value="{{ features_dict.Attr37 if features_dict else '' }}"
                                placeholder="(Current Assets - Inventories) / Long-Term Liabilities"
-                               /><br>
+                        /><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>Profit On Operating Activities / Financial Expenses</label>
                         <input class="form-control" type="text" name="Attr4"
-                               placeholder="Current Assets / Short-Term Liabilities" /><br>
+                               value="{{ features_dict.Attr4 if features_dict else '' }}"
+                               placeholder="Current Assets / Short-Term Liabilities"/><br>
                     </div>
                     <div class="col-md-6">
                         <label>Working Capital / Fixed Assets</label>
                         <input class="form-control" type="text" name="Attr40"
+                               value="{{ features_dict.Attr40 if features_dict else '' }}"
                                placeholder="(Current Assets - Inventory - Receivables) / Short-Term Liabilities"
-                               /><br>
+                        /><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>Logarithm Of Total Assets</label>
                         <input class="form-control" type="text" name="Attr41"
+                               value="{{ features_dict.Attr41 if features_dict else '' }}"
                                placeholder="Total Liabilities / ((Profit On Operating Activities + Depreciation) * (12 / 365))"
-                               /><br>
+                        /><br>
                     </div>
                     <div class="col-md-6">
                         <label>(Current Liabilities * 365) / Cost Of Products Sold</label>
                         <input class="form-control" type="text" name="Attr43"
-                               placeholder="Rotation Receivables + Inventory Turnover In Days" /><br>
+                               value="{{ features_dict.Attr43 if features_dict else '' }}"
+                               placeholder="Rotation Receivables + Inventory Turnover In Days"/><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>(Current Liabilities * 365) / Cost Of Products Sold</label>
                         <input class="form-control" type="text" name="Attr45"
+                               value="{{ features_dict.Attr45 if features_dict else '' }}"
                                placeholder="(Current Liabilities * 365) / Cost Of Products Sold"
-                               /><br>
+                        /><br>
                     </div>
                     <div class="col-md-6">
                         <label>Rotation Receivables + Inventory Turnover In Days</label>
                         <input class="form-control" type="text" name="Attr46"
-                               placeholder="(Current Assets - Inventory) / Short-Term Liabilities" /><br>
+                               value="{{ features_dict.Attr46 if features_dict else '' }}"
+                               placeholder="(Current Assets - Inventory) / Short-Term Liabilities"/><br>
                     </div>
                 </div>
                 <div class="row">
@@ -148,61 +168,103 @@
                             Expenses
                             - Depreciation)] * 365</label>
                         <input class="form-control" type="text" name="Attr5"
+                               value="{{ features_dict.Attr5 if features_dict else '' }}"
                                placeholder="[(Cash + Short-Term Securities + Receivables - Short-Term Liabilities) / (Operating Expenses - Depreciation)] * 365"
-                               /><br>
+                        /><br>
                     </div>
                     <div class="col-md-6">
                         <label>Current Assets / Total Liabilities</label>
                         <input class="form-control" type="text" name="Attr50"
-                               placeholder="Current Assets / Total Liabilities" /><br>
+                               value="{{ features_dict.Attr50 if features_dict else '' }}"
+                               placeholder="Current Assets / Total Liabilities"/><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>Working Capital</label>
-                        <input class="form-control" type="text" name="Attr55" placeholder="Working Capital"
-                               /><br>
+                        <input class="form-control" type="text" name="Attr55"
+                               value="{{ features_dict.Attr55 if features_dict else '' }}" placeholder="Working Capital"
+                        /><br>
                     </div>
                     <div class="col-md-6">
                         <label>(Current Assets - Inventory - Short-Term Liabilities) / (Sales - Gross Profit -
                             Depreciation)</label>
                         <input class="form-control" type="text" name="Attr57"
+                               value="{{ features_dict.Attr57 if features_dict else '' }}"
                                placeholder="(Current Assets - Inventory - Short-Term Liabilities) / (Sales - Gross Profit - Depreciation)"
-                               /><br>
+                        /><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>Long-Term Liabilities / Equity</label>
                         <input class="form-control" type="text" name="Attr59"
+                               value="{{ features_dict.Attr59 if features_dict else '' }}"
                                placeholder="Long-Term Liabilities / Equity"
-                               /><br>
+                        /><br>
                     </div>
                     <div class="col-md-6">
                         <label>Retained Earnings / Total Assets</label>
                         <input class="form-control" type="text" name="Attr6"
+                               value="{{ features_dict.Attr6 if features_dict else '' }}"
                                placeholder="Retained Earnings / Total Assets"
-                               /><br>
+                        /><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>Sales / Fixed Assets</label>
-                        <input class="form-control" type="text" name="Attr64" placeholder="Sales / Fixed Assets"
-                               /><br>
+                        <input class="form-control" type="text" name="Attr64"
+                               value="{{ features_dict.Attr64 if features_dict else '' }}"
+                               placeholder="Sales / Fixed Assets"
+                        /><br>
                     </div>
                     <div class="col-md-6">
                         <label>Sales / Total Assets</label>
-                        <input class="form-control" type="text" name="Attr9" placeholder="Sales / Total Assets"
-                               /><br>
+                        <input class="form-control" type="text" name="Attr9"
+                               value="{{ features_dict.Attr9 if features_dict else '' }}"
+                               placeholder="Sales / Total Assets"
+                        /><br>
                     </div>
                 </div>
                 <!--              <div style="position: fixed; bottom: 50px; right: 30px; width: 50px; height:50px">-->
-                <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+                <button type="submit" id="btn" class="btn btn-primary btn-block btn-large">Predict</button>
+                <div style="text-align: center;">
+                    <h4>
+                        <i>
+                            **Missing values will be replaced with random values between the minimum and the maximum
+                            value of this column in the complete dataset**
+                        </i>
+                    </h4>
+                </div>
                 <!--              </div>-->
             </form>
         </div>
     </div>
 </div>
+
+
+<script type="application/javascript">
+    $(document).ready(function () {
+        function updateButtonName() {
+            let empty = false;
+            $('form input').each(function () {
+                if ($(this).val().length == 0) {
+                    empty = true;
+                }
+            });
+            if (empty) {
+                $('#btn').html("Fill all fields");
+            } else {
+                $('#btn').html("Predict");
+            }
+        }
+
+        $('form input').focusout(
+            updateButtonName
+        );
+        updateButtonName()
+    });
+</script>
 </body>
 </html>
